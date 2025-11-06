@@ -1,11 +1,447 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>ijal loli</h1>
-  </body>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Input Nilai Mahasiswa</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+        .header-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            background-color: #667eea;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .btn-primary {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+        .btn-primary:hover {
+            background-color: #5568d3;
+            border-color: #5568d3;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .required::after {
+            content: " *";
+            color: red;
+        }
+        #notifikasi {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section text-center">
+            <h1><i class="bi bi-mortarboard-fill"></i> Sistem Input Nilai Mahasiswa</h1>
+            <p class="mb-0">Aplikasi Manajemen Nilai Mahasiswa Berbasis Web</p>
+        </div>
+
+        <!-- Area Notifikasi -->
+        <div id="notifikasi"></div>
+
+        <!-- Form Input Nilai -->
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-pencil-square"></i> Form Input Nilai Mahasiswa
+            </div>
+            <div class="card-body">
+                <form id="formNilai">
+                    <div class="row">
+                        <!-- Data Mahasiswa -->
+                        <div class="col-md-6">
+                            <h5 class="text-primary mb-3"><i class="bi bi-person-fill"></i> Data Mahasiswa</h5>
+                            
+                            <div class="mb-3">
+                                <label for="nim" class="form-label required">NIM</label>
+                                <input type="text" class="form-control" id="nim" placeholder="Contoh: 123456789" maxlength="15" required>
+                                <div class="form-text">Maksimal 15 karakter angka</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nama" class="form-label required">Nama Mahasiswa</label>
+                                <input type="text" class="form-control" id="nama" placeholder="Masukkan nama lengkap" maxlength="50" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="prodi" class="form-label required">Program Studi</label>
+                                <input type="text" class="form-control" id="prodi" placeholder="Contoh: Teknik Informatika" maxlength="40" required>
+                            </div>
+                        </div>
+
+                        <!-- Data Mata Kuliah & Nilai -->
+                        <div class="col-md-6">
+                            <h5 class="text-primary mb-3"><i class="bi bi-book-fill"></i> Data Mata Kuliah & Nilai</h5>
+                            
+                            <div class="mb-3">
+                                <label for="kodeMK" class="form-label required">Kode Mata Kuliah</label>
+                                <input type="text" class="form-control" id="kodeMK" placeholder="Contoh: TIF101" maxlength="10" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="namaMK" class="form-label required">Nama Mata Kuliah</label>
+                                <input type="text" class="form-control" id="namaMK" placeholder="Contoh: Pemrograman Web" maxlength="50" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="sks" class="form-label required">SKS</label>
+                                <input type="number" class="form-control" id="sks" placeholder="Contoh: 3" min="1" max="6" required>
+                                <div class="form-text">SKS antara 1-6</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nilai" class="form-label required">Nilai</label>
+                                <input type="number" class="form-control" id="nilai" placeholder="Contoh: 85" min="0" max="100" step="0.01" required>
+                                <div class="form-text">Nilai antara 0-100</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Aksi -->
+                    <div class="row mt-4">
+                        <div class="col-12 text-end">
+                            <button type="reset" class="btn btn-secondary me-2">
+                                <i class="bi bi-x-circle"></i> Reset Form
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Simpan Nilai
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tabel Data Nilai -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-table"></i> Data Nilai Mahasiswa</span>
+                <button class="btn btn-light btn-sm" id="btnTampilkanData">
+                    <i class="bi bi-arrow-clockwise"></i> Tampilkan Data Nilai
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-container">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>No</th>
+                                <th>NIM</th>
+                                <th>Nama Mahasiswa</th>
+                                <th>Program Studi</th>
+                                <th>Kode MK</th>
+                                <th>Mata Kuliah</th>
+                                <th>SKS</th>
+                                <th>Nilai</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelNilai">
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">
+                                    <i class="bi bi-inbox"></i> Belum ada data. Klik "Tampilkan Data Nilai" untuk memuat data.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-muted mt-4">
+            <p>&copy; 2024 Sistem Input Nilai Mahasiswa | Powered by Firebase & Bootstrap</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Firebase SDK v9 (modular) -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, doc, setDoc, deleteDoc, query, orderBy } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        // GANTI dengan konfigurasi Firebase Anda sendiri
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ============================================
+        // LOGIC LAYER - FUNGSI UTAMA
+        // ============================================
+
+        /**
+         * Fungsi untuk memvalidasi kelengkapan dan format data input
+         * Sesuai dengan Activity Diagram: Validasi Data
+         * @returns {Object} { valid: boolean, pesan: string }
+         */
+        function validasiInput() {
+            const nim = document.getElementById('nim').value.trim();
+            const nama = document.getElementById('nama').value.trim();
+            const prodi = document.getElementById('prodi').value.trim();
+            const kodeMK = document.getElementById('kodeMK').value.trim();
+            const namaMK = document.getElementById('namaMK').value.trim();
+            const sks = document.getElementById('sks').value;
+            const nilai = document.getElementById('nilai').value;
+
+            // Validasi: Semua field harus terisi
+            if (!nim || !nama || !prodi || !kodeMK || !namaMK || !sks || !nilai) {
+                return { valid: false, pesan: 'Semua field harus diisi!' };
+            }
+
+            // Validasi: NIM harus angka dan maksimal 15 karakter
+            if (!/^\d+$/.test(nim)) {
+                return { valid: false, pesan: 'NIM harus berupa angka!' };
+            }
+            if (nim.length > 15) {
+                return { valid: false, pesan: 'NIM maksimal 15 karakter!' };
+            }
+
+            // Validasi: SKS harus angka positif
+            if (sks < 1 || sks > 6) {
+                return { valid: false, pesan: 'SKS harus antara 1-6!' };
+            }
+
+            // Validasi: Nilai harus antara 0-100
+            if (nilai < 0 || nilai > 100) {
+                return { valid: false, pesan: 'Nilai harus antara 0-100!' };
+            }
+
+            return { valid: true, pesan: 'Validasi berhasil' };
+        }
+
+        /**
+         * Fungsi untuk menyimpan data ke Firestore
+         * Sesuai dengan Activity Diagram: Kirim data ke Firebase
+         * Menyimpan ke 3 collection: mahasiswa, matakuliah, nilai
+         */
+        async function simpanData(event) {
+            event.preventDefault();
+
+            // Step 1: Validasi Input (sesuai Activity Diagram)
+            const validasi = validasiInput();
+            if (!validasi.valid) {
+                tampilkanNotifikasi('danger', validasi.pesan);
+                return;
+            }
+
+            try {
+                // Ambil nilai dari form
+                const nim = document.getElementById('nim').value.trim();
+                const nama = document.getElementById('nama').value.trim();
+                const prodi = document.getElementById('prodi').value.trim();
+                const kodeMK = document.getElementById('kodeMK').value.trim();
+                const namaMK = document.getElementById('namaMK').value.trim();
+                const sks = parseInt(document.getElementById('sks').value);
+                const nilai = parseFloat(document.getElementById('nilai').value);
+
+                // Step 2: Simpan ke Collection 'mahasiswa' (jika belum ada)
+                await setDoc(doc(db, 'mahasiswa', nim), {
+                    nim: nim,
+                    nama: nama,
+                    prodi: prodi
+                }, { merge: true });
+
+                // Step 3: Simpan ke Collection 'matakuliah' (jika belum ada)
+                await setDoc(doc(db, 'matakuliah', kodeMK), {
+                    kode_mk: kodeMK,
+                    nama_mk: namaMK,
+                    sks: sks
+                }, { merge: true });
+
+                // Step 4: Simpan ke Collection 'nilai' dengan ID auto-generated
+                const idNilai = `NILAI_${nim}_${kodeMK}_${Date.now()}`;
+                await setDoc(doc(db, 'nilai', idNilai), {
+                    id_nilai: idNilai,
+                    nim_mhs: nim,
+                    kode_mk: kodeMK,
+                    nilai: nilai,
+                    timestamp: new Date()
+                });
+
+                // Step 5: Tampilkan notifikasi berhasil (sesuai Activity Diagram)
+                tampilkanNotifikasi('success', 'Data berhasil disimpan ke Firebase!');
+
+                // Step 6: Reset form
+                document.getElementById('formNilai').reset();
+
+                // Step 7: Load data terbaru (sesuai Activity Diagram)
+                loadData();
+
+            } catch (error) {
+                console.error('Error menyimpan data:', error);
+                tampilkanNotifikasi('danger', 'Gagal menyimpan data: ' + error.message);
+            }
+        }
+
+        /**
+         * Fungsi untuk mengambil dan menampilkan data dari Firestore
+         * Sesuai dengan Activity Diagram: Mengambil data dari Firebase & Menampilkan ke tabel
+         */
+        async function loadData() {
+            try {
+                const tbody = document.getElementById('tabelNilai');
+                tbody.innerHTML = '<tr><td colspan="9" class="text-center"><div class="spinner-border text-primary" role="status"></div> Memuat data...</td></tr>';
+
+                // Ambil semua data dari collection 'nilai'
+                const nilaiSnapshot = await getDocs(collection(db, 'nilai'));
+                
+                if (nilaiSnapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="9" class="text-center text-muted"><i class="bi bi-inbox"></i> Tidak ada data nilai</td></tr>';
+                    return;
+                }
+
+                // Clear tbody
+                tbody.innerHTML = '';
+                let nomor = 1;
+
+                // Loop setiap document nilai
+                for (const nilaiDoc of nilaiSnapshot.docs) {
+                    const nilaiData = nilaiDoc.data();
+                    
+                    // Ambil data mahasiswa (join manual)
+                    const mahasiswaDoc = await getDocs(collection(db, 'mahasiswa'));
+                    const mahasiswaData = mahasiswaDoc.docs.find(doc => doc.id === nilaiData.nim_mhs)?.data() || {};
+
+                    // Ambil data mata kuliah (join manual)
+                    const mkDoc = await getDocs(collection(db, 'matakuliah'));
+                    const mkData = mkDoc.docs.find(doc => doc.id === nilaiData.kode_mk)?.data() || {};
+
+                    // Buat baris tabel
+                    const row = `
+                        <tr>
+                            <td>${nomor++}</td>
+                            <td>${nilaiData.nim_mhs || '-'}</td>
+                            <td>${mahasiswaData.nama || '-'}</td>
+                            <td>${mahasiswaData.prodi || '-'}</td>
+                            <td>${nilaiData.kode_mk || '-'}</td>
+                            <td>${mkData.nama_mk || '-'}</td>
+                            <td class="text-center">${mkData.sks || '-'}</td>
+                            <td class="text-center"><span class="badge bg-success">${nilaiData.nilai || '-'}</span></td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="hapusData('${nilaiDoc.id}')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                }
+
+                tampilkanNotifikasi('info', 'Data berhasil dimuat dari Firebase!');
+
+            } catch (error) {
+                console.error('Error memuat data:', error);
+                document.getElementById('tabelNilai').innerHTML = 
+                    `<tr><td colspan="9" class="text-center text-danger">Error: ${error.message}</td></tr>`;
+            }
+        }
+
+        /**
+         * Fungsi untuk menghapus data dari Firestore
+         * @param {string} idNilai - ID document yang akan dihapus
+         */
+        window.hapusData = async function(idNilai) {
+            if (!confirm('Yakin ingin menghapus data ini?')) return;
+
+            try {
+                await deleteDoc(doc(db, 'nilai', idNilai));
+                tampilkanNotifikasi('success', 'Data berhasil dihapus!');
+                loadData();
+            } catch (error) {
+                console.error('Error menghapus data:', error);
+                tampilkanNotifikasi('danger', 'Gagal menghapus data: ' + error.message);
+            }
+        };
+
+        /**
+         * Fungsi untuk menampilkan notifikasi (Alert Bootstrap)
+         * @param {string} tipe - Tipe alert: success, danger, warning, info
+         * @param {string} pesan - Pesan yang akan ditampilkan
+         */
+        function tampilkanNotifikasi(tipe, pesan) {
+            const notifikasi = document.getElementById('notifikasi');
+            const iconMap = {
+                success: 'check-circle-fill',
+                danger: 'exclamation-triangle-fill',
+                warning: 'exclamation-circle-fill',
+                info: 'info-circle-fill'
+            };
+
+            notifikasi.innerHTML = `
+                <div class="alert alert-${tipe} alert-dismissible fade show" role="alert">
+                    <i class="bi bi-${iconMap[tipe]}"></i> ${pesan}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            notifikasi.style.display = 'block';
+
+            // Auto hide setelah 5 detik
+            setTimeout(() => {
+                notifikasi.style.display = 'none';
+            }, 5000);
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        
+        // Event: Submit form (Tombol Simpan Nilai)
+        document.getElementById('formNilai').addEventListener('submit', simpanData);
+
+        // Event: Tombol Tampilkan Data Nilai
+        document.getElementById('btnTampilkanData').addEventListener('click', loadData);
+
+        // Load data saat halaman pertama kali dibuka
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Aplikasi Input Nilai Mahasiswa siap digunakan!');
+            console.log('PENTING: Ganti firebaseConfig dengan konfigurasi Firebase Anda!');
+        });
+    </script>
+</body>
 </html>
