@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lihat Data Mahasiswa</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-semibold" href="index.html">Portal Akademik</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="index.html">Input Nilai</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-semibold" href="data.html">Lihat Data Mahasiswa</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tabel Data -->
+    <div class="container py-5">
+        <div class="card shadow-sm form-card mx-auto">
+            <div class="card-body">
+                <h4 class="text-center mb-4 fw-bold">Data Nilai Mahasiswa</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle text-center">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Lengkap</th>
+                                <th>NIM</th>
+                                <th>Mata Kuliah</th>
+                                <th>Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTable">
+                            <!-- Data akan ditampilkan di sini -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="index.html" class="btn btn-secondary">Kembali ke Form</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script untuk menampilkan data -->
+    <script>
+        // Ambil data dari LocalStorage
+        const mahasiswaData = JSON.parse(localStorage.getItem("mahasiswa")) || [];
+        const tableBody = document.getElementById("dataTable");
+
+        if (mahasiswaData.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" class="text-muted">Belum ada data yang tersimpan.</td></tr>`;
+        } else {
+            mahasiswaData.forEach((mhs, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${mhs.nama}</td>
+                        <td>${mhs.nim}</td>
+                        <td>${mhs.matkul}</td>
+                        <td>${mhs.nilai}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>

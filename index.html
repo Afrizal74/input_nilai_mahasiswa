@@ -66,6 +66,30 @@
         </div>
     </div>
 
+    <script>
+document.querySelector("form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const nama = document.querySelector("input[placeholder='Masukkan nama lengkap']").value;
+    const nim = document.querySelector("input[placeholder='Contoh: 10119001']").value;
+    const matkul = document.querySelector("select").value;
+    const nilai = document.querySelector("input[placeholder='85.5']").value;
+
+    if (!nama || !nim || matkul === "Pilih mata kuliah..." || !nilai) {
+        alert("Harap isi semua data dengan benar!");
+        return;
+    }
+
+    const mahasiswa = JSON.parse(localStorage.getItem("mahasiswa")) || [];
+    mahasiswa.push({ nama, nim, matkul, nilai });
+    localStorage.setItem("mahasiswa", JSON.stringify(mahasiswa));
+
+    alert("Data berhasil disimpan!");
+    this.reset();
+});
+</script>
+
+
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
