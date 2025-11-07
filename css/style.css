@@ -1,5 +1,5 @@
-body {
-  background-color: #f8f9fa;
+html body {
+  background-image: linear-gradient(to bottom ,#0575E6, #01ffd5) ;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
