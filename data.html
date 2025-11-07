@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lihat Data Mahasiswa</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
     <!-- Bootstrap 5 -->
     <link
@@ -17,9 +17,25 @@
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
       <div class="container">
         <a class="navbar-brand fw-semibold" href="index.html"
-          >Portal Akademik Kampus</a
+          >Portal Akademik</a
         >
-        <div class="collapse navbar-collapse justify-content-end">
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link fw-semibold" href="index.html">Input Nilai</a>
@@ -36,7 +52,7 @@
 
     <!-- Tabel Data -->
     <div class="container py-5">
-      <div class="card shadow-sm form-card mx-auto">
+      <div class="card shadow-sm table-card mx-auto">
         <div class="card-body">
           <h4 class="text-center mb-4 fw-bold">Data Nilai Mahasiswa</h4>
 
