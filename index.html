@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form Input Nilai</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
     <!-- Bootstrap 5 -->
     <link
@@ -40,7 +40,7 @@
       <div class="card form-card shadow-sm">
         <div class="card-body">
           <h4 class="text-center mb-4 fw-bold">Formulir Input Nilai</h4>
-          <form>
+          <form id="formNilai">
             <div class="mb-3">
               <label class="form-label">Nama Lengkap</label>
               <input
@@ -65,9 +65,9 @@
               <label class="form-label">Mata Kuliah</label>
               <select class="form-select" id="inputMatkul">
                 <option selected value="">Pilih mata kuliah...</option>
-                <option>Pemrograman Mobile</option>
-                <option>Struktur Data dan Algoritma</option>
-                <option>Pemrograman Web</option>
+                <option value="MK-PM">Pemrograman Mobile</option>
+                <option value="MK-SDA">Struktur Data dan Algoritma</option>
+                <option value="MK-PW">Pemrograman Web</option>
               </select>
             </div>
 
@@ -83,7 +83,11 @@
             </div>
 
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary btn-custom">
+              <button
+                type="submit"
+                id="tombolSimpan"
+                class="btn btn-primary btn-custom"
+              >
                 Simpan Data
               </button>
             </div>
@@ -92,36 +96,8 @@
       </div>
     </div>
 
-    <script>
-      // index.html <script>
-      document
-        .getElementById("formNilai")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          // Gunakan getElementById
-          const nama = document.getElementById("inputNama").value;
-          const nim = document.getElementById("inputNim").value;
-          const matkul = document.getElementById("inputMatkul").value;
-          const nilai = document.getElementById("inputNilai").value;
-
-          // Validasi juga bisa diperketat
-          if (!nama || !nim || !matkul || !nilai) {
-            alert("Harap isi semua data dengan benar!");
-            return;
-          }
-
-          const mahasiswa = JSON.parse(localStorage.getItem("mahasiswa")) || [];
-          mahasiswa.push({ nama, nim, matkul, nilai });
-          localStorage.setItem("mahasiswa", JSON.stringify(mahasiswa));
-
-          alert("Data berhasil disimpan!");
-          this.reset();
-        });
-    </script>
-
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="js/index-logic.js" defer></script>
+    <script type="module" src="js/index-app.js"></script>
   </body>
 </html>

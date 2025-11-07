@@ -69,30 +69,6 @@
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script untuk menampilkan data -->
-    <script>
-      // Ambil data dari LocalStorage
-      const mahasiswaData = JSON.parse(localStorage.getItem("mahasiswa")) || [];
-      const tableBody = document.getElementById("dataTable");
-
-      if (mahasiswaData.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="5" class="text-muted">Belum ada data yang tersimpan.</td></tr>`;
-      } else {
-        mahasiswaData.forEach((mhs, index) => {
-          const row = `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${mhs.nama}</td>
-                        <td>${mhs.nim}</td>
-                        <td>${mhs.matkul}</td>
-                        <td>${mhs.nilai}</td>
-                    </tr>
-                `;
-          tableBody.innerHTML += row;
-        });
-      }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="js/data-logic.js" defer></script>
+    <script type="module" src="js/data-app.js"></script>
   </body>
 </html>

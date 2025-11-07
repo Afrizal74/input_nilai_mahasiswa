@@ -1,31 +1,17 @@
-// ==========================================
+// =MANTAP==========================================
 // KONFIGURASI FIREBASE
 // ==========================================
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+// Meng-import 'db' yang sudah diinisialisasi dari file terpisah
+import { db } from "./firebase-config.js";
+
+// Meng-import FUNGSI-FUNGSI Firestore yang akan kita gunakan di file ini
 import {
-  getFirestore,
   collection,
   addDoc,
   getDocs,
   query,
   orderBy,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-// Your web app's Firebase configuration
-// GANTI dengan konfigurasi Firebase Anda sendiri
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 // ==========================================
 // CLASS MAHASISWA
@@ -174,7 +160,8 @@ function validasiInput(nama, nim, matkul, nilai) {
   }
 
   // Validasi: cek apakah mata kuliah sudah dipilih
-  if (!matkul || matkul === "Pilih mata kuliah...") {
+  if (!matkul) {
+    // Cukup cek jika string-nya kosong (falsy)
     return {
       valid: false,
       message: "Silakan pilih mata kuliah!",
@@ -227,30 +214,38 @@ function validasiInput(nama, nim, matkul, nilai) {
  * @param {number} nilai - Nilai mahasiswa
  * @returns {Promise<object>} - {success: boolean, message: string}
  */
-async function simpanData(nama, nim, matkul, nilai) {
+// Ubah parameter fungsi
+async function simpanData(nama, nim, matkulKode, matkulNama, nilai) {
   try {
-    // Generate ID unik untuk nilai
     const id_nilai = `NL${Date.now()}`;
 
     // Buat instance dari class Nilai
     const dataNilai = new Nilai(
       id_nilai,
-      matkul, // kode_mk
+      matkulKode, // 'kode_mk' sekarang berisi "MK-PM"
       parseFloat(nilai),
       nim
     );
 
-    // Buat instance dari class Mahasiswa
     const dataMahasiswa = new Mahasiswa(nim, nama, "Teknik Informatika");
 
     // Simpan ke Firestore collection "nilai"
+    // Kita membuat SATU dokumen 'nilai'
     const docRef = await addDoc(collection(db, "nilai"), {
+      // Data dari 'Nilai'
       id_nilai: dataNilai.id_nilai,
-      nim: dataNilai.nim,
-      nama: dataMahasiswa.nama,
-      kode_mk: dataNilai.kode_mk,
-      nama_mk: matkul,
       nilai: dataNilai.nilai,
+
+      // Kunci (FK) dari 'Mahasiswa'
+      nim: dataNilai.nim,
+      // Data tambahan dari 'Mahasiswa'
+      nama: dataMahasiswa.nama,
+
+      // Kunci (FK) dari 'MataKuliah'
+      kode_mk: dataNilai.kode_mk,
+      // Data tambahan dari 'MataKuliah'
+      nama_mk: matkulNama,
+
       timestamp: new Date().toISOString(),
     });
 
