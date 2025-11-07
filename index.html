@@ -1,96 +1,127 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Form Input Nilai</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 
     <!-- Bootstrap 5 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-semibold" href="#">Portal Akademik</a>
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active fw-semibold" href="#">Input Nilai</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="data.html" class="nav-link fw-semibold" href="#">Lihat Data Mahasiswa</a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container">
+        <a class="navbar-brand fw-semibold" href="#">Portal Akademik</a>
+        <div class="collapse navbar-collapse justify-content-end">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active fw-semibold" href="#">Input Nilai</a>
+            </li>
+            <li class="nav-item">
+              <a href="data.html" class="nav-link fw-semibold" href="#"
+                >Lihat Data Mahasiswa</a
+              >
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- Form Card -->
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="card form-card shadow-sm">
-            <div class="card-body">
-                <h4 class="text-center mb-4 fw-bold">Formulir Input Nilai</h4>
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" placeholder="Masukkan nama lengkap">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">NIM (Nomor Induk Mahasiswa)</label>
-                        <input type="text" class="form-control" placeholder="Contoh: 701230..">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Mata Kuliah</label>
-                        <select class="form-select">
-                            <option selected>Pilih mata kuliah...</option>
-                            <option>Pemrograman Mobile</option>
-                            <option>Struktur Data dan Algoritma</option>
-                            <option>Pemrograman Web</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-4">
-                        <label class="form-label">Nilai Mahasiswa</label>
-                        <input type="number" step="0.1" class="form-control" placeholder="85.5">
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-custom">Simpan Data</button>
-                    </div>
-                </form>
+    <div
+      class="container d-flex justify-content-center align-items-center"
+      style="min-height: 80vh"
+    >
+      <div class="card form-card shadow-sm">
+        <div class="card-body">
+          <h4 class="text-center mb-4 fw-bold">Formulir Input Nilai</h4>
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Nama Lengkap</label>
+              <input
+                type="text"
+                id="inputNama"
+                class="form-control"
+                placeholder="Masukkan nama lengkap"
+              />
             </div>
+
+            <div class="mb-3">
+              <label class="form-label">NIM (Nomor Induk Mahasiswa)</label>
+              <input
+                type="text"
+                id="inputNim"
+                class="form-control"
+                placeholder="Contoh: 701230.."
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Mata Kuliah</label>
+              <select class="form-select" id="inputMatkul">
+                <option selected value="">Pilih mata kuliah...</option>
+                <option>Pemrograman Mobile</option>
+                <option>Struktur Data dan Algoritma</option>
+                <option>Pemrograman Web</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Nilai Mahasiswa</label>
+              <input
+                type="number"
+                step="0.1"
+                id="inputNilai"
+                class="form-control"
+                placeholder="85.5"
+              />
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-custom">
+                Simpan Data
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
 
     <script>
-document.querySelector("form").addEventListener("submit", function(e) {
-    e.preventDefault();
+      // index.html <script>
+      document
+        .getElementById("formNilai")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
 
-    const nama = document.querySelector("input[placeholder='Masukkan nama lengkap']").value;
-    const nim = document.querySelector("input[placeholder='Contoh: 10119001']").value;
-    const matkul = document.querySelector("select").value;
-    const nilai = document.querySelector("input[placeholder='85.5']").value;
+          // Gunakan getElementById
+          const nama = document.getElementById("inputNama").value;
+          const nim = document.getElementById("inputNim").value;
+          const matkul = document.getElementById("inputMatkul").value;
+          const nilai = document.getElementById("inputNilai").value;
 
-    if (!nama || !nim || matkul === "Pilih mata kuliah..." || !nilai) {
-        alert("Harap isi semua data dengan benar!");
-        return;
-    }
+          // Validasi juga bisa diperketat
+          if (!nama || !nim || !matkul || !nilai) {
+            alert("Harap isi semua data dengan benar!");
+            return;
+          }
 
-    const mahasiswa = JSON.parse(localStorage.getItem("mahasiswa")) || [];
-    mahasiswa.push({ nama, nim, matkul, nilai });
-    localStorage.setItem("mahasiswa", JSON.stringify(mahasiswa));
+          const mahasiswa = JSON.parse(localStorage.getItem("mahasiswa")) || [];
+          mahasiswa.push({ nama, nim, matkul, nilai });
+          localStorage.setItem("mahasiswa", JSON.stringify(mahasiswa));
 
-    alert("Data berhasil disimpan!");
-    this.reset();
-});
-</script>
-
+          alert("Data berhasil disimpan!");
+          this.reset();
+        });
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="js/index-logic.js" defer></script>
+  </body>
 </html>
