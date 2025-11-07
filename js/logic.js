@@ -1,4 +1,3 @@
-// =MANTAP==========================================
 // KONFIGURASI FIREBASE
 // ==========================================
 // Meng-import 'db' yang sudah diinisialisasi dari file terpisah
@@ -271,7 +270,7 @@ async function simpanData(nama, nim, matkulKode, matkulNama, nilai) {
  * Fungsi loadData()
  * Mengambil semua data nilai dari Firebase Firestore
  * dan menampilkannya ke tabel di halaman web
- * Sesuai dengan activity diagram: mengambil data dari firebase & Menampilkan data ke tabel nilai
+ * mengambil data dari firebase & Menampilkan data ke tabel nilai
  *
  * @returns {Promise<Array>} - Array berisi data nilai mahasiswa
  */
@@ -346,7 +345,7 @@ function tampilkanDataKeTable(data) {
 }
 
 // ==========================================
-// EXPORT FUNGSI-FUNGSI
+// EXPORT FUNCTION
 // ==========================================
 // Export agar bisa digunakan di file HTML
 export {

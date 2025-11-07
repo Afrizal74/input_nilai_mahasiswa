@@ -1,4 +1,4 @@
-// Impor fungsi yang kita butuhkan HANYA untuk halaman data
+// Impor fungsi yang dibutuhkan HANYA untuk halaman data
 import { loadData, tampilkanDataKeTable } from "./logic.js";
 
 // Fungsi async untuk memuat dan menampilkan data
