@@ -1,5 +1,5 @@
 html body {
-  background-image: linear-gradient(to bottom, #0575e6, #01ffd5);
+  background-image: linear-gradient(to right bottom, #0575e6, #01ffd5);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
 }
